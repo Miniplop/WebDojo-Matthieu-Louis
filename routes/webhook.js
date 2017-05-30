@@ -6,7 +6,7 @@ var config = require('../config/default.json');
 router.get('/', function(req, res, next) {
   console.log(config);
   if (req.query['hub.mode'] === 'subscribe' &&
-      req.query['hub.verify_token'] === config) {
+      req.query['hub.verify_token'] === config.validationToken) {
     console.log("Validating webhook");
     res.status(200).send(req.query['hub.challenge']);
   } else {
