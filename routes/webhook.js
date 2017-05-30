@@ -5,14 +5,16 @@ var config = require('../config/default.json');
 /* GET hello world page. */
 router.get('/', function(req, res, next) {
   console.log(config);
-  if (req.query['hub.mode'] === 'subscribe' &&
-      req.query['hub.verify_token'] === config.get('validationToken')) {
-    console.log(config.get('validationToken'));
-    res.status(200).send(req.query['hub.challenge']);
+  if (authenticate(req)) {
+    res.status(200).send("hello");
   } else {
     console.error("Failed validation. Make sure the validation tokens match.");
     res.sendStatus(403);
   }
 });
+
+router.post('/', function(req, res, next) {
+  res.status(200).send("hello");
+}
 
 module.exports = router;
